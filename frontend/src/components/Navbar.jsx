@@ -1,11 +1,27 @@
 import { Link, useLocation } from "react-router";
-import { BookOpenIcon, LayoutDashboardIcon, SparklesIcon } from "lucide-react";
+import { BookOpenIcon, LayoutDashboardIcon, MoonIcon, SparklesIcon, SunIcon } from "lucide-react";
 import { UserButton } from "@clerk/clerk-react";
+import { useEffect, useState } from "react";
 
 function Navbar() {
   const location = useLocation();
+  const [theme, setTheme] = useState(() => {
+    // Get theme from localStorage or default to light
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
 
-  console.log(location);
+  useEffect(() => {
+    // Apply theme to document
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -33,10 +49,10 @@ function Navbar() {
           {/* PROBLEMS PAGE LINK */}
           <Link
             to={"/problems"}
-            className={`px-4 py-2.5 rounded-lg transition-all duration-200 
+            className={`px-4 py-2.5 rounded-lg border border-base-300 transition-all duration-200 
               ${
                 isActive("/problems")
-                  ? "bg-primary text-primary-content"
+                  ? "bg-primary text-primary-content border-primary"
                   : "hover:bg-base-200 text-base-content/70 hover:text-base-content"
               }
               
@@ -66,7 +82,16 @@ function Navbar() {
             </div>
           </Link>
 
-          <div className="ml-4 mt-2">
+          {/* THEME TOGGLE */}
+          <button
+            onClick={toggleTheme}
+            className="p-2.5 rounded-lg border border-base-300 hover:bg-base-200 text-base-content/70 hover:text-base-content transition-all duration-200"
+            aria-label="Toggle theme"
+          >
+            {theme === "light" ? <MoonIcon className="size-5" /> : <SunIcon className="size-5" />}
+          </button>
+
+          <div className="ml-2 mt-2">
             <UserButton />
           </div>
         </div>

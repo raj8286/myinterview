@@ -1,6 +1,72 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: all;
+  themes: light, dark;
+}
+
+/* Custom blue accent overrides for light theme */
+[data-theme="light"] {
+  --color-primary: #2563eb;
+  --color-primary-content: #ffffff;
+  
+  --color-secondary: #3b82f6;
+  --color-secondary-content: #ffffff;
+  
+  --color-accent: #0ea5e9;
+  --color-accent-content: #ffffff;
+  
+  --color-neutral: #1e293b;
+  --color-neutral-content: #f8fafc;
+  
+  --color-base-100: #ffffff;
+  --color-base-200: #f1f5f9;
+  --color-base-300: #e2e8f0;
+  --color-base-content: #1e293b;
+  
+  --color-info: #38bdf8;
+  --color-info-content: #ffffff;
+  
+  /* Keep success green for ticks */
+  --color-success: #22c55e;
+  --color-success-content: #ffffff;
+  
+  --color-warning: #f59e0b;
+  --color-warning-content: #ffffff;
+  
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
+}
+
+/* Custom blue accent overrides for dark theme */
+[data-theme="dark"] {
+  --color-primary: #3b82f6;
+  --color-primary-content: #ffffff;
+  
+  --color-secondary: #60a5fa;
+  --color-secondary-content: #1e293b;
+  
+  --color-accent: #38bdf8;
+  --color-accent-content: #1e293b;
+  
+  --color-neutral: #1e293b;
+  --color-neutral-content: #f8fafc;
+  
+  --color-base-100: #0f172a;
+  --color-base-200: #1e293b;
+  --color-base-300: #334155;
+  --color-base-content: #f1f5f9;
+  
+  --color-info: #38bdf8;
+  --color-info-content: #1e293b;
+  
+  /* Keep success green for ticks */
+  --color-success: #22c55e;
+  --color-success-content: #ffffff;
+  
+  --color-warning: #f59e0b;
+  --color-warning-content: #1e293b;
+  
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
 }
 
 /* Add cursor pointer to buttons by default - this is coming from tailwind docs */

@@ -3,14 +3,33 @@ import {
   ArrowRightIcon,
   CheckIcon,
   Code2Icon,
+  MoonIcon,
   SparklesIcon,
+  SunIcon,
   UsersIcon,
   VideoIcon,
   ZapIcon,
 } from "lucide-react";
 import { SignInButton } from "@clerk/clerk-react";
+import { useEffect, useState } from "react";
 
 function HomePage() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   return (
     <div className="bg-gradient-to-br from-base-100 via-base-200 to-base-300">
       {/* NAVBAR */}
@@ -33,13 +52,23 @@ function HomePage() {
             </div>
           </Link>
 
-          {/* AUTH BTN */}
-          <SignInButton mode="modal">
-            <button className="group px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-xl text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 flex items-center gap-2">
-              <span>Get Started</span>
-              <ArrowRightIcon className="size-4 group-hover:translate-x-0.5 transition-transform" />
+          {/* RIGHT SIDE - THEME TOGGLE & AUTH */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-lg border border-base-300 hover:bg-base-200 text-base-content/70 hover:text-base-content transition-all duration-200"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? <MoonIcon className="size-5" /> : <SunIcon className="size-5" />}
             </button>
-          </SignInButton>
+
+            <SignInButton mode="modal">
+              <button className="group px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-xl text-white font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 flex items-center gap-2">
+                <span>Get Started</span>
+                <ArrowRightIcon className="size-4 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </SignInButton>
+          </div>
         </div>
       </nav>
 
